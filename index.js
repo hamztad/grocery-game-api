@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 
 app.get("/", (req, res) => {
-  const key = process.env.GROCERY_API_KEY;
+  const key = "pK1fTABWxNgpuQ1LRu49gfu5dYcNYxESIYe2zbzI";
 
   if (key) {
     res.send("API key loaded ✅");
