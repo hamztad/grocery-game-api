@@ -465,7 +465,7 @@ async function saveSessions(sessions) {
 }
 
 function maxRounds() {
-  return 54;
+  return 120;
 }
 
 function roundTarget() {
@@ -504,12 +504,12 @@ async function buildSessionPayload(catalog, req, clientId = "") {
   let products = catalog.items || [];
   let rounds = buildSessionRounds(products, sessionId, maxRounds());
 
-  if (rounds.length < roundTarget()) {
+  if (rounds.length < maxRounds()) {
     const poolItems = await loadPoolItems();
     const dailyKeys = new Set((products || []).map(rotationKey));
     const extra = (poolItems || [])
       .filter((p) => isPlayableProduct(p) && !dailyKeys.has(rotationKey(p)))
-      .slice(0, 200);
+      .slice(0, maxRounds() * 2);
     const merged = [...(products || []), ...extra];
     if (merged.length > products.length) {
       products = merged;
